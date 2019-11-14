@@ -1,0 +1,25 @@
+plugins {
+    id "base"
+    id "com.github.node-gradle.node" version "1.3.0"
+}
+
+node {
+    download = true
+}
+
+clean.delete "dist"
+/* テストの設定は、ビルドにさらに時間がかかるため、一旦コメントアウト
+task npmTestUnit(type: NpmTask) {
+    args = ["run", "test:unit",]
+    execOverrides {
+        it.standardOutput = new ByteArrayOutputStream()
+    }
+} */
+task npmBuild(type: NpmTask) {
+    args = ["run", "build",]
+    execOverrides {
+        it.standardOutput = new ByteArrayOutputStream()
+    }
+}
+/* npmBuild.dependsOn npmTestUnit */
+build.dependsOn npmBuild

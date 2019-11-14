@@ -1,0 +1,51 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
+    id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'spring_vue_test'
+version = '1.0.0-RELEASE'
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+/* intelij用のホットデプロイの設定らしいのでひとまずコメントアウト
+idea {
+    module {
+        inheritOutputDirs = false
+        outputDir = file("$buildDir/classes/main/") 
+    }
+} */
+
+repositories {
+    mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+    }
+}
+
+dependencies {
+    def lombokVersion = "1.18.6"
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // for lombok
+    // testAnnotationProcessor、testCompileOnly を併記しなくてよいよう configurations で設定している
+    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+    compileOnly("org.projectlombok:lombok:${lombokVersion}")
+}
+
+clean.delete fileTree("src/main/resources/static").include("**/*")
+task copyDistToStatic(type: Copy) {
+    from project(":frontend-app").file("dist")
+    into "src/main/resources/static"
+}
+copyDistToStatic.dependsOn ":frontend-app:build"
+processResources.dependsOn copyDistToStatic

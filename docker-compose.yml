@@ -1,0 +1,38 @@
+version: "3"
+services:
+
+    node:
+        build:
+            context: .
+            dockerfile: ./docker/node/Dockerfile
+        volumes:
+          - .:/app
+          # node_modulesを共有ボリュームとして設定する
+          - modules_data:/app/frontend-app/node_modules          
+        ports:
+          - "8081:8080"
+        working_dir: /app/frontend-app
+        command: npm run serve
+        # ホットリロードを有効にするため
+        environment:
+          - CHOKIDAR_USEPOLLING=true
+        tty: true
+
+    app:
+        build:
+            context: .
+            dockerfile: ./docker/java/Dockerfile
+        depends_on:
+          - node
+        ports:
+            - "8080:8080"
+        volumes:
+            - .:/app
+            - modules_data:/app/frontend-app/node_modules            
+        working_dir: /app
+        command: ./gradlew bootRun
+        tty: true
+
+# 共有ボリュームの設定
+volumes:
+  modules_data:

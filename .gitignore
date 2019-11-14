@@ -1,0 +1,14 @@
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+
+# node_modulesの除外
+frontend-app/node_modules/
+
+# npmでビルドしたファイルの置き場所なので除外(SpringBootの静的ファイル参照場所でもある)
+backend-app/src/main/resources/static
+
+# logファイル
+backend-app/logs/
