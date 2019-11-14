@@ -1,10 +1,12 @@
 # spring_vue_test
-SpringBoot&amp;vueの構築テスト
 
-ソースを活用したプロジェクト：
+## SpringBoot&amp;vueの構築テスト
+
+## 参照先
+ソースを活用させていただいたプロジェクト：
 https://github.com/ksby/ksbysample-boot-miscellaneous/tree/master/gradle-multiprj-vuejs-springboot
 
-作成者のブログ：
+参照先のブログ：
 https://ksby.hatenablog.com/entry/2019/05/06/090800
 
 ## sampleの概要
@@ -13,7 +15,7 @@ https://ksby.hatenablog.com/entry/2019/05/06/090800
 クリックを押すと、axiosにより、
 Javaで設定したcode と　valueのサンプルデータを得ます。
 
-- サンプルデータの設定場所：backend-app\src\main\java\ksbysample\app\backendapp\SampleResponse.java
+- サンプルデータの設定場所：backend-app\src\main\java\sample\app\backendapp\controller\SampleController.java
 
 ## 環境構築(Docker)
 
